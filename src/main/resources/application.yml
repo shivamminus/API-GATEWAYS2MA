@@ -1,0 +1,52 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+      - id: AUTH-SERVICE
+        uri: lb://AUTH-SERVICE
+        predicates:
+        - Path=/auth/**
+        filters:
+        - name: CircuitBreaker
+          args:
+            name: AUTH-SERVICE
+            fallbackuri: forward:/authservicenotresponding
+      - id: COMPONENT-SERVICE
+        uri: lb://COMPONENT-SERVICE
+        predicates:
+        - Path=/componentservice/**
+        filters:
+        - name: CircuitBreaker
+          args:
+            name: COMPONENT-SERVICE
+            fallbackuri: forward:/componentServiceNotResponding
+      - id: PAYMENT-SERVICE
+        uri: lb://PAYMENT-SERVICE
+        predicates:
+        - Path=/payment/**
+        filters:
+        - name: CircuitBreaker
+          args:
+            name: PAYMENT-SERVICE
+            fallbackuri: forward:/bookingServiceNotResponding
+      - id: PACKAGE-SERVICE
+        uri: lb://PACKAGE-SERVICE
+        predicates:
+        - Path=/packagedelivery/**
+        filters:
+        - name: CircuitBreaker
+          args:
+            name: PACKAGE-SERVICE
+            fallbackuri: forward:/bookingServiceNotResponding
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
