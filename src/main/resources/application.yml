@@ -32,7 +32,7 @@ spring:
         - name: CircuitBreaker
           args:
             name: PAYMENT-SERVICE
-            fallbackuri: forward:/bookingServiceNotResponding
+            fallbackuri: forward:/PackagingServiceNotResponding
       - id: PACKAGE-SERVICE
         uri: lb://PACKAGE-SERVICE
         predicates:
@@ -41,7 +41,7 @@ spring:
         - name: CircuitBreaker
           args:
             name: PACKAGE-SERVICE
-            fallbackuri: forward:/bookingServiceNotResponding
+            fallbackuri: forward:/PaymentServiceNotResponding
 eureka:
   client:
     register-with-eureka: true
