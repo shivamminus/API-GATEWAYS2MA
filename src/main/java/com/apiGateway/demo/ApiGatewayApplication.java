@@ -14,8 +14,9 @@ public class ApiGatewayApplication {
 	private static Logger logger = LoggerFactory.getLogger(ApiGatewayApplication.class);
 
 	public static void main(String[] args) {
-        System.setProperty("server.connection-timeout","120000");
-        logger.info("API GATEWAY APPLICATION STARTING");
+//        System.setProperty("server.connection-timeout","120000");
+		System.setProperty("http.connection.timeout","600000");
+		logger.info("API GATEWAY APPLICATION STARTING");
 		SpringApplication.run(ApiGatewayApplication.class, args);
 	}
 
